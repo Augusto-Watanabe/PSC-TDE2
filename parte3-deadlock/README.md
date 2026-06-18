@@ -38,3 +38,29 @@ Thread 1 e Thread 2:
   liberar(LOCK_A)
 Evidencia esperada
 Na versao deadlock_reproducao.py, os logs mostram a tentativa de aquisicao cruzada e, ao final, a mensagem de deteccao de deadlock apos o timeout. Na versao deadlock_corrigido.py, ambas as threads concluem normalmente.
+
+Log versão com travamento:
+[22:28:59.932] T1 tentando adquirir LOCK_A
+[22:28:59.932] T1 adquiriu LOCK_A
+[22:28:59.932] T2 tentando adquirir LOCK_B
+[22:28:59.932] T2 adquiriu LOCK_B
+[22:28:59.982] T1 tentando adquirir LOCK_B
+[22:28:59.983] T2 tentando adquirir LOCK_A
+[22:29:01.941] Deadlock detectado: as threads permaneceram bloqueadas apos o timeout.
+
+Log versão sem travamento:
+[22:29:42.593] T1 tentando adquirir LOCK_A
+[22:29:42.593] T1 adquiriu LOCK_A
+[22:29:42.594] T2 tentando adquirir LOCK_A
+[22:29:42.644] T1 tentando adquirir LOCK_B
+[22:29:42.644] T1 adquiriu LOCK_B
+[22:29:42.644] T1 executando secao critica
+[22:29:42.744] T1 liberou LOCK_B
+[22:29:42.745] T1 liberou LOCK_A e concluiu
+[22:29:42.745] T2 adquiriu LOCK_A
+[22:29:42.795] T2 tentando adquirir LOCK_B
+[22:29:42.795] T2 adquiriu LOCK_B
+[22:29:42.795] T2 executando secao critica
+[22:29:42.895] T2 liberou LOCK_B
+[22:29:42.896] T2 liberou LOCK_A e concluiu
+[22:29:42.896] Execucao terminou sem deadlock porque ambas as threads seguem a mesma ordem global de aquisicao.

@@ -1,31 +1,27 @@
-Parte 2 - Threads e semaforos
-Arquivo
-contador_semaforo.py: executa a versao sem sincronizacao e a versao com semaforo binario.
+Execuções sem sincronizacao:
 
-Execucao
-bash
-python contador_semaforo.py
-Objetivo
-Demonstrar uma condicao de corrida em um contador compartilhado acessado por varias threads e corrigi-la com um semaforo binario.
+1 exec:
+Esperado = 1600000, Obtido = 1200000
+Tempo de execução: 0.1109 segundos
 
-Parametros utilizados
-T = 8 threads
+2 exec:
+Esperado = 1600000, Obtido = 1600000
+Tempo de execução: 0.1090 segundos
 
-M = 200000 incrementos por thread
+3 exec:
+Esperado = 1600000, Obtido = 1600000
+Tempo de execução: 0.1043 segundos
 
-3 rodadas por versao
+Execuções com sincronização:
 
-O que acontece em cada versao
-Sem sincronizacao
-As threads leem e escrevem o contador compartilhado sem protecao. Como a operacao de incremento envolve leitura, modificacao e escrita, diferentes threads podem sobrescrever atualizacoes umas das outras, causando perda de incrementos.
+1 exec:
+Esperado = 1600000, Obtido = 1600000
+Tempo de execução: 1.4511 segundos
 
-Com semaforo binario
-O semaforo com 1 permissao garante exclusao mutua na secao critica. Assim, apenas uma thread por vez atualiza o contador, e o valor final passa a ser corretamente igual a T x M.
+2 exec:
+Esperado = 1600000, Obtido = 1600000
+Tempo de execução: 1.4415 segundos
 
-Discussao tecnica
-A versao sem sincronizacao pode apresentar throughput maior, mas produz resultado incorreto por causa da condicao de corrida. A versao com semaforo tende a ser mais lenta, porque serializa o acesso ao contador, mas garante corretude.
-
-Em Python, o uso do semaforo tambem impõe uma ordenacao pratica entre as entradas na secao critica: a thread que adquire a permissao executa a atualizacao antes da proxima. Isso evita intercalacoes perigosas na leitura e escrita do contador.
-
-Tabela de resultados
-Depois de executar o script, copie a tabela impressa no terminal para esta secao do README.
+3 exec:
+Esperado = 1600000, Obtido = 1600000
+Tempo de execução: 1.4486 segundos

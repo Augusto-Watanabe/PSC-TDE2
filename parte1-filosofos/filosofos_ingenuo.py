@@ -9,24 +9,19 @@ forks = [threading.Lock() for _ in range(N)]
 start_barrier = threading.Barrier(N)
 stop_event = threading.Event()
 
-
 def ts():
     return datetime.now().strftime('%H:%M:%S.%f')[:-3]
 
-
 def log(msg):
     print(f'[{ts()}] {msg}', flush=True)
-
 
 def pensar(pid):
     log(f'Filosofo {pid} pensando')
     time.sleep(0.3)
 
-
 def comer(pid):
     log(f'Filosofo {pid} comendo')
     time.sleep(0.3)
-
 
 def filosofo(pid):
     esquerda = pid
@@ -52,7 +47,6 @@ def filosofo(pid):
         forks[esquerda].release()
         log(f'Filosofo {pid} voltou a pensar')
 
-
 def main():
     threads = [threading.Thread(target=filosofo, args=(i,), daemon=True) for i in range(N)]
 
@@ -62,3 +56,6 @@ def main():
     time.sleep(RUN_TIME)
     stop_event.set()
     log('Execucao encerrada. Esta versao pode entrar em deadlock.')
+
+if __name__ == '__main__':
+    main()
